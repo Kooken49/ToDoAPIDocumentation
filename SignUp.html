@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <div>
+            <h1>Sign up</h1>
+            
+                <input type ="text" placeholder="First Name">
+                <input type="text" placeholder="Last Name">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="password">
+                <input type="password" placeholder="Confirm Password">
+                <button type ="button" onclick="Send()">Confirm</button>
+        </div>
+    </center>
+    
+</form>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function Send(){
+            var x = $("input");
+            for(s in x){
+                console.log(x[s].value);
+            }
+            $.ajax({
+                type : 'GET',
+                url : 'https://todo-list.dcism.org/signup_action.php',
+                headers: {"first_name":  x[0].value, "last_name": x[1].value, "email": x[2].value, "password": x[3].value, "confirm_password": x[4].value},
+                data : data,
+                success : function(response_data) {
+                    alert("Status: " + JSON.stringify(response_data));
+                },
+                error : function(res_data){
+                    alert("Error: " + JSON.stringify(res_data));
+                }
+            })
+    }
+
+</script>
+</html>
