@@ -25,19 +25,23 @@
 <script>
     function Send(){
             var x = $("input");
+            
+            var Send =  {"first_name": x[0].value, "last_name": x[1].value, "email": x[2].value, "password": x[3].value, "confirm_password": x[4].value}
+            console.log(JSON.stringify(Send));
             for(s in x){
                 console.log(x[s].value);
             }
             $.ajax({
-                type : 'GET',
+                type : 'POST',
                 url : 'https://todo-list.dcism.org/signup_action.php',
-                headers: {"first_name":  x[0].value, "last_name": x[1].value, "email": x[2].value, "password": x[3].value, "confirm_password": x[4].value},
-                data : data,
+                data : JSON.stringify(Send),
                 success : function(response_data) {
+                    console.log(JSON.stringify(Send));
                     alert("Status: " + JSON.stringify(response_data));
                 },
                 error : function(res_data){
-                    alert("Error: " + JSON.stringify(res_data));
+                    console.log(JSON.stringify(Send));
+                    alert("Error: " + res_data.status +" "+ res_data.statusText);
                 }
             })
     }
