@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD&UPDATE</title>
+</head>
+
+<body>
+    <center>
+    <h1>ADD TO DO TASK</h1>
+    
+    <div class="addContainer">
+        <form id="fAdd">
+            <label for="task">Task</label>
+            <input type="text" id="task" name="item_name" required>
+
+            <label for="description">Description</label>
+            <input type="text" id="description" name="item_description" required>
+
+            <label for="user_id">User ID</label>
+            <input type="number" id="user_id" name="user_id" required>
+
+            <button type="submit" id="addList">Add</button>
+        </form>
+    </div>
+
+    </center>
+    <div id="log"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+        $("#fAdd").submit(function(event){
+            event.preventDefault();
+
+        var addTask = $("#task").val();
+        var addDesc = $("#description").val();
+        var addID = $("#user_id").val();
+
+        var sendData = {
+            "item_name": addTask,
+            "item_description": addDesc,
+            "user_id": addID
+        }
+        $.ajax({
+            type: "POST",
+            url: "https://todo-list.dcism.org/addItem_action.php?item_name="+addTask+"&item_description="+addDesc+"&user_id="+addID,
+            data: JSON.stringify(sendData),
+            dataType: "json",
+            success: function(response_data){
+                    console.log("Raw response:", response_data);
+                    $("#log").text(response_data.message);
+                    alert("Status: " + response_data.status + " | " + response_data.message);
+                },
+                error: function(res_data){
+                    console.error("Error:", res_data);
+                    alert("Error: " + res_data.status + " " + res_data.statusText);
+                }
+            });
+        });
+        });
+    </script>
+</body>
+</html>
